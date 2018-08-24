@@ -1,63 +1,57 @@
 # Database Design Mini Lecture
-This is a mini lecture designed to help students as they begin personal projects. For most students this is the first time they have actually thought about how they would architect a database. The goal is to help them avoid complicating pitfalls and incorporate some best practices.
+This is a mini lecture designed to help students as they begin personal projects. For most students this is the first time they have actually thought about how they would architect a database. The main goals of this mini lecture are as follows:
+1. To help students identify and avoid complicating pitfalls. 
+2. To help students understand the relationships between tables and how to think about the significance of those relationships for querying data.
+3. To demonstrate best practices.
+4. To help students build more robust databases.
 
-We are going to start by building a database with many common mistakes, and then redesign it demonstrating the benefits of better practices. 
+## Resources
+* [lucidchart.com](https://lucidchart.com/) - You can create a free account that lets you build all kinds of charts including database diagrams.
 
-## Schema
-Schema is the blueprint of our database; yes it does include the data types of our fields / columns, but that is only one piece. It also includes how we are going to set up our tables and how we will keep track of our data relationships.
-1. Structure
-  * One to one
-  * One to many
-  * Many to many
-2. Datatypes
-  * It is important to make sure data is the right type when coming from the client
-3. M-M, 1-1, 1-M
+## Instructions
+Below are three different scenarios. The first is the simplest and the last the most complex. However we are going to have the same approach for all where we show a poor design and then create a better one demonstrating why. After each design we will also demonstrate some queries so students can really grasp how the design of their databases will affect the dataflow of their applications.
 
-## Naming Convention
-1. Naming convention
-    * Lower Case Snake Case ex: _snake\_case_ or _my\_awesome\_table_
+# First
+### Info for the first example:
 
-## Strategies
-1. "all classes in separate tables"
-2. junction tables to describe relationships
+> *Schema* is the blueprint of our database; yes it does include the data types of our fields / columns, but that is only one piece. It also includes how we are going to set up our tables and how we will keep track of our data relationships.
 
-## Discuss relationship
-1. 1-1
-2. 1-M 
-3. M-M
+> Future employers may use a different naming convention, but for consistency use _snake\_case_.
+
+### Strategies
+> "All classes in separate tables" >> this means separate "like" data into it's own table. It's better to have many smaller tables that can be queried through their relationships rather than have all "unlike", but related, data in the same table.
+> junction tables to describe relationships
 
 ## Progression of nastiness
 1. one row with tons of columns
 2. many rows with repeat data
 3. Properly formatted db with multiple rows
 
-class   classid student teacher
-g	    1	    1	    4
-g	    1	    2	    4
-g	    3	    3	    3
-a	    2	    3	    2
-
-1. Student/Class/Teachers - 
-    - Progressing from grade to high school
-    - What about lunch lady?
+1. Student/Class/Teachers
 1. 1-M: k-6 class/students,
-1. 1-1: Teachers to classes/ could include in class table but what about lunch lady?
 1. Scale it up bad examples - Classes and students in high school
 1. Scale it up again: M-M: Teacher_classes_role - college example
 1. students-grades-/-assignments-classes
 
-# One to Many
-  One student enrolled in many classes.
-  * Students should have a grasp on one to many relationships. We are starting here to help set up our many to many relation later on. This also helps demonstrate how a database can grow as new features are added.
-
 ## Bad Example
   1. What do you name your table when it holds everything?
+  2. If you are doing this...stop...please.
+  3. Creates duplicate data that is hard to differentiate when querying.
+  4. What if you needed to track other faculty?
+  4. Other reasons/examples of how this is difficult to maintain?
+
   #### info
-  | student_id  | student_first | student_gender | class1 | class2 | class3 | class4 | class5 | teacher1 | teacher2 | teacher3 | teacher1 | teacher1 |
-  | ----------- | ------------- | -------------- | ------ | ------ | ------ | ------ | ------ | -------- | -------- | -------- | -------- | -------- |   
-  |             |               |                |        |        |        |        |        |          |          |          |          |          |
+  | student_id  | student_first | student_last | student_gender | class1 | class2 | class3 | class4 | class5 | teacher1 | teacher2 | teacher3 | teacher4 | teacher5 |
+  | ----------- | ------------- | ------------ | -------------- | ------ | ------ | ------ | ------ | ------ | -------- | -------- | -------- | -------- | -------- |   
+  |             |               |              |                |        |        |        |        |        |          |          |          |          |          |
 
 ## Better Design
+  As we walk through the better structure point out how it solves the problems created in the bad example.
+  1. 
+### One to Many
+  One student enrolled in many classes.
+  > Students should have a grasp on one to many relationships. We are starting here to help set up our many to many relation later on. This also helps demonstrate how a database can grow as new features are added.
+
   1. All classes will be kept in the same table referenced by a foreign key.
   * Foreign Key
     - 1. What is it?
@@ -67,18 +61,22 @@ a	    2	    3	    2
 > Always think about how you will access the data!
 
   #### students
-  | student_id  | name |
-  | ----------- | ---- |
-  |             |      |
+  | student_id  | name | clss_id |
+  | ----------- | ---- | ------- |
+  |             |      |         |
   #### class
-  | class_id  | class | student_id |
-  | --------- | ----- | ---------- |
-  |           |       |            |
+  | class_id  | class | grade_level | teacher_id | room_num |
+  | --------- | ----- | ----------- | ---------- | -------- |
+  |           |       |             |            |          |
 We can search for students by name, or find reviews by title.
 ```
 select books.book_id, books.title, reviews.review, reviews.rating
 from reviews
 join books on books.book_id = reviews.book_id
 where reviews.rating <= 5;
-
 ```
+
+## Expanding Out Database
+
+## Contributions
+  If you see any problems or have great ideas that can be added please let us know!
