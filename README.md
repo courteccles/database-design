@@ -1,7 +1,7 @@
 # Database Design Mini Lecture
 This is a mini lecture designed to help students as they begin personal projects. For most students this is the first time they have actually thought about how they would architect a database. The main goals of this mini lecture are as follows:
 1. To help students identify and avoid complicating pitfalls. 
-2. To help students understand the relationships between tables and how to think about the significance of those relationships for querying data.
+2. To help students distinguish between "like" data and related data.
 3. To demonstrate best practices.
 4. To help students build more robust databases.
 
@@ -9,9 +9,45 @@ This is a mini lecture designed to help students as they begin personal projects
 * [lucidchart.com](https://lucidchart.com/) - You can create a free account that lets you build all kinds of charts including database diagrams.
 
 ## Instructions
-Below are three different scenarios. The first is the simplest and the last the most complex. However we are going to have the same approach for all where we show a poor design and then create a better one demonstrating why. After each design we will also demonstrate some queries so students can really grasp how the design of their databases will affect the dataflow of their applications.
+Below are three different scenarios. The first is the simplest and the last is the most complex. However we are going to have the same approach for all where we show a poor design and then have the students help us make a better one. After each design we will also demonstrate some queries so students can really grasp how the design of their databases will affect the dataflow of their applications.
+
+
+a. YOUR DATA HAS TO COME FROM SOMEWHERE - you need to figure out where you will get your data from
+
+b. basic rules
+
+c. bad example that demonstrates why basic rules
+
+d. 1-1, 1-M relationships, fk
+
+e. better example
 
 # First
+Begin by asking students to architect the database for an elementary school student tracker. Explain that it will... Briefly work with them and talk about some best practices and naming conventions with a [one to many](#one-to-many) relationship.
+
+## Basic Rules
+  1. Don't alter tables
+  2. Don't dynamically create/drop tables ex. creating a cart table for each user
+  3. 
+
+## Bad Example
+  1. What do you name your table when it holds everything?
+  2. Creates duplicate data that is hard to differentiate when querying.
+  3. What if you needed to track other faculty?
+  4. Other reasons/examples of how this is difficult to maintain?
+
+  #### info
+  | student_id  | student_first | student_last | student_gender | class1 | class2 | class3 | class4 | class5 | teacher1 | teacher2 | teacher3 | teacher4 | teacher5 |
+  | ----------- | ------------- | ------------ | -------------- | ------ | ------ | ------ | ------ | ------ | -------- | -------- | -------- | -------- | -------- |   
+  |             |               |              |                |        |        |        |        |        |          |          |          |          |          |
+  Queries
+
+  Find student by last name
+  ```
+  select * from students where student_last = 
+  ```
+
+
 ### Info for the first example:
 
 > *Schema* is the blueprint of our database; yes it does include the data types of our fields / columns, but that is only one piece. It also includes how we are going to set up our tables and how we will keep track of our data relationships.
@@ -19,7 +55,7 @@ Below are three different scenarios. The first is the simplest and the last the 
 > Future employers may use a different naming convention, but for consistency use _snake\_case_.
 
 ### Strategies
-> "All classes in separate tables" >> this means separate "like" data into it's own table. It's better to have many smaller tables that can be queried through their relationships rather than have all "unlike", but related, data in the same table.
+> "All classes in separate tables" >> this means separating "like" data in their own tables. It's better to have many smaller tables that can be queried through their relationships rather than have all "unlike", but related, data in the same table.
 > junction tables to describe relationships
 
 ## Progression of nastiness
@@ -33,17 +69,6 @@ Below are three different scenarios. The first is the simplest and the last the 
 1. Scale it up again: M-M: Teacher_classes_role - college example
 1. students-grades-/-assignments-classes
 
-## Bad Example
-  1. What do you name your table when it holds everything?
-  2. If you are doing this...stop...please.
-  3. Creates duplicate data that is hard to differentiate when querying.
-  4. What if you needed to track other faculty?
-  4. Other reasons/examples of how this is difficult to maintain?
-
-  #### info
-  | student_id  | student_first | student_last | student_gender | class1 | class2 | class3 | class4 | class5 | teacher1 | teacher2 | teacher3 | teacher4 | teacher5 |
-  | ----------- | ------------- | ------------ | -------------- | ------ | ------ | ------ | ------ | ------ | -------- | -------- | -------- | -------- | -------- |   
-  |             |               |              |                |        |        |        |        |        |          |          |          |          |          |
 
 ## Better Design
   As we walk through the better structure point out how it solves the problems created in the bad example.
