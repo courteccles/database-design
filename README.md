@@ -10,21 +10,19 @@ This is a mini lecture designed to help students as they begin personal projects
 * [lucidchart.com](https://lucidchart.com/) - You can create a free account that lets you build all kinds of charts including database diagrams.
 
 ## Instructions
-Below are three different scenarios. The first is the simplest and the last is the most complex. We will have the same approach for each where we show a poor design and then have the students help us make a better one. During each scenario we will also demonstrate some queries so students can really grasp how the design of their databases will affect the dataflow of their applications.
+Below is an example of a poorly designed database. Walk through this poor table design and show students how we would need to query it. Point out the difficulties that come from the poor design.  During each scenario we will also demonstrate some queries so students can really grasp how the design of their databases will affect the dataflow of their applications.
 
-## First
-Begin by asking students to architect the database for an elementary school student tracker. Explain that it will... Briefly work with them and talk about some best practices and naming conventions with a [one to many](#one-to-many) relationship.
 
-### Bad Example
+### Bad Example 
+  #### students_classes_teachers
+  | student_id  | student_first | student_last | student_gender | class1 | class2 | class3 | class4 | class5 | teacher1 | teacher2 | teacher3 | teacher4 | teacher5 |
+  | ----------- | ------------- | ------------ | -------------- | ------ | ------ | ------ | ------ | ------ | -------- | -------- | -------- | -------- | -------- |   
+  |             |               |              |                |        |        |        |        |        |          |          |          |          |          |
   1. What do you name your table when it holds everything?
   2. Creates duplicate data that is hard to differentiate when querying.
   3. What if you needed to track other faculty?
   4. Other reasons/examples of how this is difficult to maintain?
 
-  #### info
-  | student_id  | student_first | student_last | student_gender | class1 | class2 | class3 | class4 | class5 | teacher1 | teacher2 | teacher3 | teacher4 | teacher5 |
-  | ----------- | ------------- | ------------ | -------------- | ------ | ------ | ------ | ------ | ------ | -------- | -------- | -------- | -------- | -------- |   
-  |             |               |              |                |        |        |        |        |        |          |          |          |          |          |
 
   Queries
 
@@ -58,17 +56,21 @@ Begin by asking students to architect the database for an elementary school stud
   This table does not adequately represent the relationships between classes and teachers, merely that they are related to a particular student. It could be assumed that teacher1 corresoponds with class1, but this is still very difficult to search for. 
 
 ### Better Design
-> *Schema* is the blueprint of our database; yes it does include the data types of our fields / columns, but that is only one piece. It also includes how we are going to set up our tables and how we will keep track of our data relationships.
-
 > Future employers may use a different naming convention, but for consistency use _snake\_case_.
 
->  1. Don't alter tables in production. This may seem relatively harmless, but it is dangerous. You could inadvertantly delete data trying to refactor your database.
-> 2. Don't dynamically create/drop tables ex. creating a cart table for each user.
-> 3. Don't be afraid to have many tables. 
+> *Schema* is the blueprint of our database; it includes not only the data types of our fields/columns, but also the structure of data relationships.
 
+  #### students
+  | id  | first_name | last_name | gender | class_id |
+  | --- | ---------- | --------- | ------ | -------- |
+
+  #### classes
+  | id | grade_level | teacher_id | room |
+  | -- | ----------- | ---------- | ---- |
 ### Strategies
-> "All classes in separate tables" >> this means separating "like" data in their own tables. It's better to have many smaller tables that can be queried through their relationships rather than have all "unlike", but related, data in the same table.
-  As we walk through the better structure point out how it solves the problems created in the bad example.
+1. "All classes in separate tables" >> this means separating "like" data in their own tables. It's better to have many smaller tables that can be queried through their relationships rather than have all "unlike", but related, data in the same table.
+2. Try not to alter tables in production. This may seem relatively harmless, but it is dangerous. You could inadvertantly delete data trying to refactor your database.
+3. Don't dynamically create/drop tablesl; for example we shouldn't be creating a new 'cart' table for each user of our app.
 
 ### One to Many
   One student enrolled in many classes.
@@ -100,20 +102,6 @@ where reviews.rating <= 5;
 ### Strategies
 > "All classes in separate tables" >> this means separating "like" data in their own tables. It's better to have many smaller tables that can be queried through their relationships rather than have all "unlike", but related, data in the same table.
 > junction tables to describe relationships
-
-## Progression of nastiness
-1. one row with tons of columns
-2. many rows with repeat data
-3. Properly formatted db with multiple rows
-
-1. Student/Class/Teachers
-1. 1-M: k-6 class/students,
-1. Scale it up bad examples - Classes and students in high school
-1. Scale it up again: M-M: Teacher_classes_role - college example
-1. students-grades-/-assignments-classes
-
-
-
 
 ## Expanding Out Database
 
