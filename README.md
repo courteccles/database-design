@@ -15,7 +15,7 @@ Below is an example of a poorly designed database. Walk through this poor table 
 
 ### Bad Example 
   students_classes_teachers
-  
+
 | student_id | student_first | student_last | student_gender | class1 | class2  | class3  | teacher1 | teacher2   | teacher3... |
 | ---------- | ------------- | ------------ | -------------- | ------ | ------- | ------- | -------- | ---------- | ----------- |
 | 1          | Nelly         | Narwol       | female         | Math   | English | Science | Mr. Jay  | Mrs. Thomp | Miss Lindy  |
@@ -78,30 +78,35 @@ Below is an example of a poorly designed database. Walk through this poor table 
 > Use junction tables to track data relationships.
 
   students
+
   | id  | first_name | last_name | gender |
   | --- | ---------- | --------- | ------ |
   | 1   | Nelly      | Narwol    | female |
   | 2   | Greg       | Greggory  | male   |
 
   classes
+
   | id | subject | description       | 
   | -- | ------- | ----------------- |
   | 1  | Math    | Numbers and stuff |
   | 2  | English | Lots of reading   |
 
   teachers
+
   | id | first_name | last_name |
   | -- | ---------- | --------- |
   | 1  | Kenneth    | Jay       |
   | 2  | Linda      | Lindy     |
 
   students_classes
+
   | id | student_id | class_id |
   | -- | ---------- | -------- |
   | 1  | 1          | 1        |
   | 2  | 1          | 2        |
 
   teachers_classes
+  
   | id | teacher_id | class_id |
   | -- | ---------- | -------- |
   | 1  | 1          | 1        |
