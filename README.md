@@ -142,7 +142,7 @@ where c.id = $1;
 ``` 
 You can join as many tables as you need.
 
-## Conclusive Recap
+## Concluding Recap
 
 ### One to Many
 One student enrolled in many classes.
