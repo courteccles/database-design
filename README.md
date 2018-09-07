@@ -15,6 +15,7 @@ Below is an example of a poorly designed database. Walk through this poor table 
 
 ### Bad Example 
   students_classes_teachers
+  
 | student_id | student_first | student_last | student_gender | class1 | class2  | class3  | teacher1 | teacher2   | teacher3... |
 | ---------- | ------------- | ------------ | -------------- | ------ | ------- | ------- | -------- | ---------- | ----------- |
 | 1          | Nelly         | Narwol       | female         | Math   | English | Science | Mr. Jay  | Mrs. Thomp | Miss Lindy  |
