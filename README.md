@@ -1,4 +1,4 @@
-# Database Design Mini Lecture
+# Database Design
 This is a mini lecture designed to help students as they begin personal projects. For most students this is the first time they have actually tried to build thier own schema. The main goals of this mini lecture are as follows:
 
 1. To help students identify and avoid complicating pitfalls. 
@@ -106,7 +106,7 @@ Below is an example of a poorly designed database. Walk through this poor table 
   | 2  | 1          | 2        |
 
   teachers_classes
-  
+
   | id | teacher_id | class_id |
   | -- | ---------- | -------- |
   | 1  | 1          | 1        |
