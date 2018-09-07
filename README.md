@@ -142,19 +142,21 @@ where c.id = $1;
 ``` 
 You can join as many tables as you need.
 
+## Conclusive Recap
+
 ### One to Many
-  One student enrolled in many classes.
-  > Students should have a grasp on one to many relationships. We are starting here to help set up our many to many relation later on. This also helps demonstrate how a database can grow as new features are added.
+One student enrolled in many classes.
+> Students should have a grasp on one to many relationships. We are starting here to help set up our many to many relation later on. This also helps demonstrate how a database can grow as new features are added.
 
-  1. All classes will be kept in the same table referenced by a foreign key.
-    1. What is a foreign key?
-    2. Does it need to be constrained? (It is good to know that you can, but for the scope of this mini-lecture as well as the scope of most personal projects this is not necessary.)
-  2. When labeling, create table names that are unique and descriptive; create column names that make sense, they don't have to be unique from other tables. You can also use the nouns/adjectives rule; make table names a noun and column names adjectives to the table name.   
-  3. I like to label my primary key "table_name_id", and ALWAYS label corresponding foreign keys the same! (The ultimate rule is consistency and to follow the convention set by your company.)
-> Always think about how you will access the data!
+1. All classes will be kept in the same table referenced by a foreign key.
+  1. What is a foreign key?
+  2. Does it need to be constrained? (It is good to know that you can, but for the scope of this mini-lecture as well as the scope of most personal projects this is not necessary.)
+2. When labeling, create table names that are unique and descriptive; create column names that make sense, they don't have to be unique from other tables. You can also use the nouns/adjectives rule; make table names a noun and column names adjectives to the table name.   
+3. I like to label my primary key "table_name_id", and ALWAYS label corresponding foreign keys the same! (The ultimate rule is consistency and to follow the convention set by your company.)
+4. Always think about how you will access the data!
 
 
-## Expanding Out Database
-
+## Scalability
+  From here on out if you want to add a new feature to your app (for example assignments in our student tracker) you can simply create a new table. Assignments are a many to many relationship, many assignments for many students, so we will need a table to keep the assignment information and then a junction table to track the relationship between each assignment and the student it corresoponds to. The beauty is we don't need to alter any of our existing tables to track the new information which is why this pattern of database design is easy to maintain!
 ## Contributions
   If you see any problems or have great ideas that can be added please let us know!
