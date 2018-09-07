@@ -11,7 +11,11 @@ This is a mini lecture designed to help students as they begin personal projects
 * [lucidchart.com](https://lucidchart.com/) - You can create a free account that lets you build all kinds of charts including database diagrams.
 
 ## Instructions
-Below is an example of a poorly designed database. Walk through this poor table design and show students how we would need to query it. Point out the difficulties that come from the poor design.  During each scenario we will also demonstrate some queries so students can really grasp how the design of their databases will affect the dataflow of their applications.
+Below is an example of a poorly designed database, a better design, and some information including questions and queries about both patterns. 
+
+Walk through the poor table design and demonstrate how it could be queried. Point out the difficulties that come from the poor design to help students really grasp how it will affect the dataflow of their applications.
+
+Work with students to create the better schema. Talk about how the the better design solves the problems created by the poor design. Demonstrate some queries to solidify this more scalable and maintainable pattern.
 
 ### Bad Example 
   students_classes_teachers
@@ -21,16 +25,14 @@ Below is an example of a poorly designed database. Walk through this poor table 
 | 1          | Nelly         | Narwol       | female         | Math   | English | Science | Mr. Jay  | Mrs. Thomp | Miss Lindy  |
 | 2          | Greg          | Greggory     | male           | Music  | Math    | Science | Mrs. Net | Mr. Krimly | Miss Lindy  |
 
+#### Problems Created by the Poor Design
   1. What do you name your table when it holds everything?
   2. How can you query a specific teacher/class?
   3. How could you query all the students that are in a certain class?
   4. Where do you store other class information?
   5. Creates duplicate data that is hard to differentiate when querying.
-  6. Other reasons/examples of how this is difficult to maintain...
-
-  If we wanted to search for a specific teacher or class the code gets quite wet, and the results have duplicates which are difficult to make sense of. 
-  
-  This table does not adequately represent the relationships between classes and teachers, merely that they are related to a particular student. It could be assumed that teacher1 corresoponds with class1, but this is still very difficult to search for.
+  6. If we wanted to search for a specific teacher or class the code gets quite wet, and the results have duplicates which are difficult to make sense of. 
+  7. This table does not adequately represent the relationships between classes and teachers, merely that they are related to a particular student. It could be assumed that teacher1 corresoponds with class1, but this is still very difficult to search for.
 
   #### Some Possible Queries
 
@@ -112,12 +114,14 @@ Below is an example of a poorly designed database. Walk through this poor table 
   | 1  | 1          | 1        |
   | 2  | 1          | 2        |
 
+#### Solutions of the Better Design
   1. Table names describe the "class" of data it contains.
   2. We can query classes/teachers for a specific class or teacher.
   3. Using a join we can query students and classes to find all students attending a certain class.
   4. We can store more detailed information about classes and teachers and students.
   5. Avoids duplicates in our query results.
   6. Scalable and easy to maintain.
+  7. The relationships between tables are available in junction tables.
 
 #### Some Possible Queries
 
@@ -143,20 +147,20 @@ where c.id = $1;
 You can join as many tables as you need.
 
 ## Concluding Recap
-
-### One to Many
+#### Naming
+1. When labeling, create table names that are unique and describe the "class" of information. Create column names that make sense, they don't have to be unique from other tables. You can also use the nouns/adjectives rule; make table names a noun and column names adjectives to the table name.   
+2. I like to label my primary key "table_name_id", and corresponding foreign keys the same. (The ultimate rule is consistency and to follow the convention set by your company.)
+#### One to Many
 One student enrolled in many classes.
-> Students should have a grasp on one to many relationships. We are starting here to help set up our many to many relation later on. This also helps demonstrate how a database can grow as new features are added.
-
-1. All classes will be kept in the same table referenced by a foreign key.
-  1. What is a foreign key?
-  2. Does it need to be constrained? (It is good to know that you can, but for the scope of this mini-lecture as well as the scope of most personal projects this is not necessary.)
-2. When labeling, create table names that are unique and descriptive; create column names that make sense, they don't have to be unique from other tables. You can also use the nouns/adjectives rule; make table names a noun and column names adjectives to the table name.   
-3. I like to label my primary key "table_name_id", and ALWAYS label corresponding foreign keys the same! (The ultimate rule is consistency and to follow the convention set by your company.)
-4. Always think about how you will access the data!
+1. "Classes" of data will be kept in the same table and related data will be referenced by a foreign key.
+  > It is good to know that foreign keys can be constrained, however this has more to do with postgreSQL syntax and is outside the scope of this lesson as well as the scope of most personal projects.)
+#### Many to Many
+Many students enrolled in many classes.
+1. Create junction tables to track the relationships between other tables.
+2. Always think about how you will access the data!
 
 
-## Scalability
+#### Scalable and Maintainable
   From here on out if you want to add a new feature to your app (for example assignments in our student tracker) you can simply create a new table. Assignments are a many to many relationship, many assignments for many students, so we will need a table to keep the assignment information and then a junction table to track the relationship between each assignment and the student it corresoponds to. The beauty is we don't need to alter any of our existing tables to track the new information which is why this pattern of database design is easy to maintain!
 ## Contributions
   If you see any problems or have great ideas that can be added please let us know!
